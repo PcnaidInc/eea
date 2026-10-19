@@ -4,3 +4,7 @@
 
 Report: https://github.com/githubnext/eea/tree/main/docs/report.md
 
+## CI
+
+CI runs on every pull request and on pushes to `main`. It checks all Markdown files with `markdownlint`.
+
