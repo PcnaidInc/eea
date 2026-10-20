@@ -6,11 +6,11 @@ author-meta: "Don Syme, Edward Aftandilian, Jonathan Carter, Anthony van der Hoo
 date-meta: "18 March 2025"
 ---
 
-[![image](https://user-images.githubusercontent.com/7204669/233200133-1263d0d1-6be2-494a-abb2-b03b5f1964df.png)](https://githubnext.com/)
-
 # Extract, Edit, Apply
 
-**GitHub Next Technical Report GHN-TR-1002**
+[![image](https://user-images.githubusercontent.com/7204669/233200133-1263d0d1-6be2-494a-abb2-b03b5f1964df.png)](https://githubnext.com/)
+
+## GitHub Next Technical Report GHN-TR-1002
 
 **Abstract**: Extract, Edit, Apply (EEA) is a new category of assists for software development that aims to streamline the process of using natural language for code modification over existing codebases. EEA revolves around the notion of _ephemeral_, _editable_ specifications: users can edit either the code, or edit ephemeral specs, which are code summaries pivoting on a user-specifiable topic. These specifications can be generated, modified, and discarded as needed. This report outlines the core idea, two of our prototypes of the concept, some observations of its utility, and describe possible future variations which could be developed.
 
@@ -113,7 +113,7 @@ In the above the symbol ⟿ represents an unstable generation of words or code e
 
 - the inherent ambiguity of words, or
 - the many possible ways to code a solution, or
-- the "filling in of reasonable defaults" that happens when LLMs elaborate specifications, or 
+- the "filling in of reasonable defaults" that happens when LLMs elaborate specifications, or
 - the "hallucination" of arbitrary results in highly ambiguous problems spaces.
 
 That is, compilation of a specification to code is not deterministic, and the specification itself contains ambiguity.
@@ -144,7 +144,7 @@ In contrast, a code-first approach with EEA has the following components:
 
 Note that the start and end states are just code. Code is King.
 
-In this `ExtractPartialSpec` function can be a simple "summarization" function. However, it can also be richer: an agentic function with multiple steps, including retrieval of relevant code, summarization, and generation of a specification. Further the output need not be plain text or markdown: the extraction function can be a diagram generator, or property extractor, or entity extractor, or a myriad of other extractive operations over code. These functions can be autonomous agentic processes that have any internal iteration or processing logic. 
+In this `ExtractPartialSpec` function can be a simple "summarization" function. However, it can also be richer: an agentic function with multiple steps, including retrieval of relevant code, summarization, and generation of a specification. Further the output need not be plain text or markdown: the extraction function can be a diagram generator, or property extractor, or entity extractor, or a myriad of other extractive operations over code. These functions can be autonomous agentic processes that have any internal iteration or processing logic.
 
 The inputs to the `ApplyPartialSpecChange` function include both the original and modified partial specifications. This function will typically be implemented by an LLM, and in its prompt-preparation the change being requested can be assessed and emphasized ("the developer has added a new requirement" or "the developer has adjusted X to Y" etc.). Further, the entire context of the original extraction is known to the function, and so the LLM processing can be designed to apply the change in a way that is consistent with the original extraction.
 
@@ -342,6 +342,7 @@ The following video shows a user using the EEA addition to add a new feature to 
 https://github.com/user-attachments/assets/73609a7e-ee0e-4eba-bb88-635cef3fea93
 
 In the video:
+
 - The user starts with an existing application generated with GitHub Spark
 - The user enters a numebr of pivots: "Features", "Rules", "Buttons"
 - In each case, the user extracts a relatively condensed specification from the codebase
@@ -349,15 +350,16 @@ In the video:
 
 ## Assessment
 
-"Extract, Edit, Apply" is a category of assists for humans to express change intent, which is then used in later prompting during the "Apply" step. In today's terminology the "Apply" step is a SWE-agent that accepts the edited EEA-derived change intent and applies the change. For this report, the question is not "can the SWE-agent make the changes required" (i.e. the quality of the "Apply" step) but rather "do the Extract, Edit steps generate high-quality change-intent". 
+"Extract, Edit, Apply" is a category of assists for humans to express change intent, which is then used in later prompting during the "Apply" step. In today's terminology the "Apply" step is a SWE-agent that accepts the edited EEA-derived change intent and applies the change. For this report, the question is not "can the SWE-agent make the changes required" (i.e. the quality of the "Apply" step) but rather "do the Extract, Edit steps generate high-quality change-intent".
 
 After editing, the change intent is passed to the AI agent as context in the prompt, usually using prompts of this form:
 
-```
+```text
+
 Here is a summary of the '{pivot}' of the codebase as extracted from the current code.
 
     {extracted spec}
-    
+
 The user has edited the summary as follows:
 
     {edited spec}
